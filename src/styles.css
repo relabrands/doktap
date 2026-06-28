@@ -1,0 +1,178 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* === DOKTAP design system ===
+   Brand: trustworthy clinical green inspired by MEDVI, but warmer & more
+   Caribbean. Mobile-first, generous spacing, big rounded primary buttons.
+*/
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--destructive);
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-soft: 0 1px 2px oklch(0 0 0 / 0.04), 0 4px 16px oklch(0 0 0 / 0.05);
+  --shadow-card: 0 1px 0 oklch(0 0 0 / 0.04), 0 8px 32px -8px oklch(0.45 0.12 160 / 0.18);
+  --shadow-cta: 0 8px 24px -8px oklch(0.55 0.16 160 / 0.45);
+}
+
+:root {
+  --radius: 0.875rem;
+
+  /* Surfaces */
+  --background: oklch(0.995 0.005 95);          /* warm white */
+  --cream: oklch(0.975 0.02 90);                /* MEDVI-like cream */
+  --foreground: oklch(0.22 0.04 250);           /* deep navy ink */
+  --ink: oklch(0.18 0.04 250);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--foreground);
+
+  /* Brand green */
+  --primary: oklch(0.58 0.13 160);              /* DOKTAP green */
+  --primary-foreground: oklch(0.99 0.01 160);
+  --primary-soft: oklch(0.93 0.05 160);         /* light green chip */
+
+  --secondary: oklch(0.96 0.01 240);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.96 0.005 240);
+  --muted-foreground: oklch(0.5 0.03 250);
+  --accent: oklch(0.93 0.05 160);
+  --accent-foreground: oklch(0.3 0.08 160);
+
+  --success: oklch(0.62 0.13 160);
+  --warning: oklch(0.78 0.14 75);
+  --destructive: oklch(0.6 0.21 27);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.91 0.01 240);
+  --input: oklch(0.93 0.01 240);
+  --ring: oklch(0.58 0.13 160);
+}
+
+.dark {
+  --background: oklch(0.18 0.03 240);
+  --foreground: oklch(0.97 0.01 240);
+  --cream: oklch(0.22 0.03 240);
+  --card: oklch(0.22 0.03 240);
+  --card-foreground: var(--foreground);
+  --popover: oklch(0.22 0.03 240);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.7 0.13 160);
+  --primary-foreground: oklch(0.16 0.03 240);
+  --primary-soft: oklch(0.32 0.06 160);
+  --secondary: oklch(0.27 0.03 240);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.27 0.03 240);
+  --muted-foreground: oklch(0.7 0.02 240);
+  --accent: oklch(0.32 0.06 160);
+  --accent-foreground: oklch(0.92 0.04 160);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.7 0.13 160);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html, body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+}
+
+/* Reusable utilities */
+@utility btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-primary-foreground);
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 1rem 1.75rem;
+  box-shadow: var(--shadow-cta);
+  transition: transform 120ms ease, filter 120ms ease;
+  &:hover { filter: brightness(1.05); }
+  &:active { transform: translateY(1px); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+}
+
+@utility btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: transparent;
+  color: var(--color-foreground);
+  font-weight: 500;
+  border-radius: 9999px;
+  padding: 0.75rem 1.25rem;
+  &:hover { background-color: var(--color-muted); }
+}
+
+@utility chip-soft {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--color-primary-soft);
+  color: oklch(0.32 0.08 160);
+  font-weight: 600;
+  border-radius: 9999px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+@utility card-soft {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: 1.25rem;
+  box-shadow: var(--shadow-soft);
+}
