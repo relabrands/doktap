@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle2, ShieldCheck, Stethoscope, Truck, Star } from "lucide-react";
 import { Wordmark, TrustBadge } from "@/components/Brand";
-import heroPen from "@/assets/hero-pen.jpg";
+import heroTirzepatide from "@/assets/hero-tirzepatide.png";
 import testi1 from "@/assets/testimonial-1.jpg";
 import testi2 from "@/assets/testimonial-2.jpg";
 import testi3 from "@/assets/testimonial-3.jpg";
@@ -65,12 +65,12 @@ function Hero() {
           <span className="chip-soft">Para adultos en República Dominicana</span>
           <h1 className="mt-4 text-4xl font-extrabold leading-[1.05] sm:text-5xl md:text-6xl">
             Por fin, en serio.{" "}
-            <span className="text-primary">Perder peso</span> con cuidado
-            médico real y medicación GLP-1.
+            <span className="text-primary">Pierde peso</span> con{" "}
+            <span style={{ color: "#7c3aed" }}>Tirzepatide</span> y cuidado médico real.
           </h1>
           <p className="mt-5 max-w-xl text-lg text-muted-foreground">
-            Evaluación gratis en 3 minutos. Sin dietas restrictivas, sin gimnasio
-            obligado. Recibimos tu caso y un doctor te contacta.
+            <strong>Tirzepatide</strong> — el agonista dual GIP/GLP-1 más avanzado para pérdida de peso.
+            Evaluación gratis en 3 minutos. Un doctor licenciado revisa tu caso y te lo envía a casa.
           </p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Link to="/quiz" className="btn-primary text-base">
@@ -95,10 +95,10 @@ function Hero() {
         <div className="relative">
           <div className="absolute -inset-8 -z-10 rounded-[3rem] bg-primary-soft/60 blur-2xl" />
           <img
-            src={heroPen}
-            alt="Pluma de medicación GLP-1"
-            width={1280}
-            height={1280}
+            src={heroTirzepatide}
+            alt="Pluma de Tirzepatide — medicamento GLP-1 para pérdida de peso"
+            width={1024}
+            height={1024}
             className="mx-auto aspect-square w-full max-w-md rounded-3xl object-cover shadow-card"
           />
         </div>
@@ -109,23 +109,23 @@ function Hero() {
 
 function Strip() {
   const items = [
-    { t: "GLP-1 Semaglutida", s: "Mensual" },
-    { t: "GLP-1 Tirzepatida", s: "Mensual" },
-    { t: "Plan Starter", s: "Evaluación + 1 mes" },
-    { t: "Plan Avanzado", s: "3 meses + seguimiento" },
+    { t: "Tirzepatide", s: "Plan Mensual", icon: "💉" },
+    { t: "Tirzepatide", s: "Plan 3 Meses", icon: "📦" },
+    { t: "Tirzepatide", s: "Plan 6 Meses", icon: "🏆" },
+    { t: "Tirzepatide", s: "Plan 12 Meses", icon: "⭐" },
   ];
   return (
     <section className="border-y border-border bg-background py-10">
       <div className="mx-auto max-w-6xl px-4">
         <h2 className="text-center text-sm font-semibold uppercase tracking-widest text-muted-foreground">
-          Tratamientos disponibles
+          Planes de Tirzepatide disponibles
         </h2>
         <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {items.map((i) => (
-            <div key={i.t} className="card-soft p-4 text-center">
-              <div className="mx-auto mb-3 size-12 rounded-full bg-primary-soft" />
-              <div className="font-semibold">{i.t}</div>
-              <div className="text-xs text-muted-foreground">{i.s}</div>
+          {items.map((i, idx) => (
+            <div key={idx} className="card-soft p-4 text-center">
+              <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-purple-50 text-2xl">{i.icon}</div>
+              <div className="font-bold" style={{ color: "#7c3aed" }}>{i.t}</div>
+              <div className="text-xs text-muted-foreground mt-1">{i.s}</div>
             </div>
           ))}
         </div>
@@ -236,10 +236,10 @@ function HowItWorks() {
 
 function FAQ() {
   const items = [
-    { q: "¿Es seguro tomar GLP-1?", a: "Sí, GLP-1 (Semaglutida, Tirzepatida) son medicamentos aprobados internacionalmente. En DOKTAP siempre lo receta un doctor licenciado tras revisar tu historial." },
+    { q: "¿Qué es el Tirzepatide?", a: "Tirzepatide es el medicamento GLP-1/GIP de última generación para pérdida de peso. Es un agonista dual aprobado internacionalmente que actúa sobre dos receptores hormonales, logrando mejores resultados que las generaciones anteriores. En DOKTAP siempre lo receta un doctor licenciado tras revisar tu historial." },
     { q: "¿Cuánto cuesta?", a: "El precio depende del plan y dosis. Después de tu evaluación gratis te enviamos opciones. No pagas nada por la evaluación." },
-    { q: "¿Necesito ir a un consultorio?", a: "No. Todo es por video o WhatsApp. La medicación llega a tu casa en cualquier provincia de RD." },
-    { q: "¿Cuánto peso voy a perder?", a: "El promedio es 1.7 a 2.3 kg por semana las primeras semanas. Tu doctor ajusta el plan según tu progreso." },
+    { q: "¿Necesito ir a un consultorio?", a: "No. Todo es por video o WhatsApp. El Tirzepatide llega a tu casa en cualquier provincia de RD." },
+    { q: "¿Cuánto peso voy a perder?", a: "En estudios clínicos, Tirzepatide logró hasta un 22% de reducción de peso corporal. Tu doctor ajusta el plan según tu progreso." },
     { q: "¿Hay efectos secundarios?", a: "Los más comunes son náuseas leves al inicio. Tu doctor te explica cómo manejarlos y ajusta la dosis si es necesario." },
   ];
   return (
