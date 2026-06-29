@@ -275,8 +275,69 @@ function FinalCTA() {
 
 function Footer() {
   return (
-    <footer className="border-t border-border bg-background py-10 text-sm text-muted-foreground">
-      <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 md:flex-row md:items-center md:justify-between">
+    <footer className="border-t border-border bg-background text-sm text-muted-foreground">
+      {/* Licensed doctors + CDB trust band */}
+      <div
+        style={{
+          background: "linear-gradient(135deg, #f0faf5 0%, #e8f7f1 100%)",
+          borderBottom: "1px solid #d1ead8",
+          padding: "1.25rem 1rem",
+        }}
+      >
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-5 md:flex-row md:items-center md:justify-between">
+          {/* Licensed doctors badge */}
+          <div className="flex items-center gap-3">
+            <div
+              style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                backgroundColor: "#2d9e6b",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+              }}
+            >
+              <ShieldCheck className="size-5 text-white" />
+            </div>
+            <div>
+              <p className="font-bold text-sm" style={{ color: "#1a1a2e" }}>
+                Medicación asignada por doctores con licencia
+              </p>
+              <p className="text-xs" style={{ color: "#4b7a5e" }}>
+                Cada prescripción es revisada y firmada por un médico certificado
+                antes de ser enviada.
+              </p>
+            </div>
+          </div>
+
+          {/* CDB Partner */}
+          <div className="flex items-center gap-3 rounded-xl border border-green-200 bg-white px-4 py-3 shadow-sm">
+            <div>
+              <p className="text-xs font-semibold" style={{ color: "#4b7a5e" }}>
+                Operamos bajo la confianza de
+              </p>
+            </div>
+            <a
+              href="https://centrodiagnosticobonaire.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Centro Diagnóstico Bonaire"
+            >
+              <img
+                src="https://centrodiagnosticobonaire.com/wp-content/uploads/2024/01/logo-cdb-copy.png"
+                alt="Centro Diagnóstico Bonaire"
+                style={{ height: "40px", width: "auto", objectFit: "contain" }}
+                loading="lazy"
+              />
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* Main footer */}
+      <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 py-8 md:flex-row md:items-center md:justify-between">
         <div>
           <Wordmark />
           <p className="mt-2 max-w-md text-xs">

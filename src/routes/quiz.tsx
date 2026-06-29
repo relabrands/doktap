@@ -312,13 +312,27 @@ function Quiz() {
         <div className="fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 bg-white/95 backdrop-blur">
           <div className="mx-auto max-w-lg px-4 py-4">
             <button
-              onClick={s.step === 10 ? next : next}
+              onClick={next}
               disabled={!canNext}
               className="quiz-btn-primary w-full"
               id={`quiz-next-step-${s.step}`}
             >
               Siguiente <ArrowRight className="size-5" />
             </button>
+            <div className="mt-2 flex items-center justify-center gap-1.5">
+              <ShieldCheck className="size-3" style={{ color: "#2d9e6b" }} />
+              <span className="text-xs text-gray-400">
+                Prescripción revisada por médicos con licencia · Operamos con{" "}
+                <a
+                  href="https://centrodiagnosticobonaire.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-gray-500 hover:underline"
+                >
+                  Centro Diagnóstico Bonaire
+                </a>
+              </span>
+            </div>
           </div>
         </div>
       )}
@@ -1521,6 +1535,30 @@ function Step11({
         </div>
       </div>
 
+      {/* Licensed doctors trust badge */}
+      <div
+        style={{
+          background: "#f0faf5",
+          border: "1px solid #bbf0d6",
+          borderRadius: "0.75rem",
+          padding: "0.875rem 1rem",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.75rem",
+          marginTop: "0.5rem",
+        }}
+      >
+        <ShieldCheck className="size-5 shrink-0" style={{ color: "#2d9e6b" }} />
+        <div>
+          <p className="text-sm font-bold" style={{ color: "#1a1a2e" }}>
+            Medicación asignada por doctores con licencia
+          </p>
+          <p className="text-xs" style={{ color: "#4b7a5e" }}>
+            Cada prescripción es revisada y firmada por un médico certificado antes de ser enviada.
+          </p>
+        </div>
+      </div>
+
       {/* Submit button */}
       <button
         onClick={onSubmit}
@@ -1547,10 +1585,69 @@ function Step11({
   );
 }
 
+/* ── CDB Footer Band (reusable) ── */
+function CDBFooterBand() {
+  return (
+    <div
+      style={{
+        background: "linear-gradient(135deg, #f0faf5 0%, #e8f7f1 100%)",
+        borderTop: "1px solid #d1ead8",
+        padding: "1rem",
+      }}
+    >
+      <div
+        style={{
+          maxWidth: "32rem",
+          margin: "0 auto",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "0.875rem",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <ShieldCheck className="size-4" style={{ color: "#2d9e6b" }} />
+          <p className="text-xs font-semibold" style={{ color: "#1a1a2e" }}>
+            Medicación asignada por doctores con licencia
+          </p>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+            background: "white",
+            border: "1px solid #d1ead8",
+            borderRadius: "0.75rem",
+            padding: "0.625rem 1rem",
+          }}
+        >
+          <p className="text-xs" style={{ color: "#4b7a5e" }}>
+            Operamos bajo la confianza de
+          </p>
+          <a
+            href="https://centrodiagnosticobonaire.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Centro Diagnóstico Bonaire"
+          >
+            <img
+              src="https://centrodiagnosticobonaire.com/wp-content/uploads/2024/01/logo-cdb-copy.png"
+              alt="Centro Diagnóstico Bonaire"
+              style={{ height: "36px", width: "auto", objectFit: "contain" }}
+              loading="lazy"
+            />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── Thank You ── */
 function ThankYou({ navigate }: { navigate: any }) {
   return (
-    <div className="min-h-screen bg-white font-sans">
+    <div className="min-h-screen bg-white font-sans flex flex-col">
       <header className="border-b border-gray-200 bg-white px-4 py-3">
         <div className="mx-auto flex max-w-lg items-center justify-between">
           <span className="font-display text-2xl font-extrabold tracking-tight" style={{ color: "#1a1a2e" }}>
@@ -1559,7 +1656,7 @@ function ThankYou({ navigate }: { navigate: any }) {
           <TrustBadge />
         </div>
       </header>
-      <div className="mx-auto max-w-lg px-4 py-16 text-center">
+      <div className="mx-auto max-w-lg flex-1 px-4 py-16 text-center">
         <div
           style={{
             width: "64px",
@@ -1589,6 +1686,7 @@ function ThankYou({ navigate }: { navigate: any }) {
           Volver al inicio
         </button>
       </div>
+      <CDBFooterBand />
     </div>
   );
 }
