@@ -72,12 +72,16 @@ function Hero() {
             <strong>Tirzepatide</strong> — el agonista dual GIP/GLP-1 más avanzado para pérdida de peso.
             Evaluación gratis en 3 minutos. Un doctor licenciado revisa tu caso y te lo envía a casa.
           </p>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="mt-7">
             <Link to="/quiz" className="btn-primary text-base">
               Empieza tu evaluación gratis <ArrowRight className="size-5" />
             </Link>
-            <div className="text-sm text-muted-foreground">
-              ⏱️ ~3 min · 🩺 Revisión médica · 🇩🇴 Entrega nacional
+            <div className="mt-3 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
+              <span>⏱️ ~3 minutos</span>
+              <span className="text-gray-300">|</span>
+              <span>🩺 Revisión médica</span>
+              <span className="text-gray-300">|</span>
+              <span>🇩🇴 Entrega nacional</span>
             </div>
           </div>
           <div className="mt-8 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
@@ -101,6 +105,9 @@ function Hero() {
             height={1024}
             className="mx-auto aspect-square w-full max-w-md rounded-3xl object-cover shadow-card"
           />
+          <p className="mt-2 text-center text-[11px] text-gray-400 italic">
+            Imagen de referencia — el producto puede variar según la presentación asignada por su médico.
+          </p>
         </div>
       </div>
     </section>
@@ -109,10 +116,10 @@ function Hero() {
 
 function Strip() {
   const items = [
-    { t: "Tirzepatide", s: "Plan Mensual", icon: "💉" },
-    { t: "Tirzepatide", s: "Plan 3 Meses", icon: "📦" },
-    { t: "Tirzepatide", s: "Plan 6 Meses", icon: "🏆" },
-    { t: "Tirzepatide", s: "Plan 12 Meses", icon: "⭐" },
+    { label: "Plan Mensual", sub: "1 mes de suministro", icon: "💉", color: "#2d9e6b" },
+    { label: "Plan Trimestral", sub: "3 meses de suministro", icon: "📅", color: "#7c3aed" },
+    { label: "Plan Semestral", sub: "6 meses de suministro", icon: "🏆", color: "#d97706" },
+    { label: "Plan Anual", sub: "12 meses + seguimiento", icon: "⭐", color: "#dc2626" },
   ];
   return (
     <section className="border-y border-border bg-background py-10">
@@ -121,11 +128,11 @@ function Strip() {
           Planes de Tirzepatide disponibles
         </h2>
         <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
-          {items.map((i, idx) => (
-            <div key={idx} className="card-soft p-4 text-center">
-              <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-purple-50 text-2xl">{i.icon}</div>
-              <div className="font-bold" style={{ color: "#7c3aed" }}>{i.t}</div>
-              <div className="text-xs text-muted-foreground mt-1">{i.s}</div>
+          {items.map((i) => (
+            <div key={i.label} className="card-soft p-4 text-center">
+              <div className="mx-auto mb-3 flex size-12 items-center justify-center rounded-full bg-gray-50 text-2xl">{i.icon}</div>
+              <div className="font-bold text-sm" style={{ color: i.color }}>{i.label}</div>
+              <div className="text-xs text-muted-foreground mt-1">{i.sub}</div>
             </div>
           ))}
         </div>
