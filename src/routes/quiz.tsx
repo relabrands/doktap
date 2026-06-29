@@ -1,6 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -143,14 +142,14 @@ const INTERESTS = [
 ];
 
 const US_STATES = [
-  "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut",
-  "Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa",
-  "Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan",
-  "Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada",
-  "New Hampshire","New Jersey","New Mexico","New York","North Carolina",
-  "North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island",
-  "South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont",
-  "Virginia","Washington","West Virginia","Wisconsin","Wyoming",
+  "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut",
+  "Delaware", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa",
+  "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan",
+  "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada",
+  "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina",
+  "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island",
+  "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
+  "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
 ];
 
 /* ─────────────────────────── component ─────────────────────── */
@@ -160,17 +159,16 @@ function Quiz() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-  const submit = useServerFn(submitPatient);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) setS({ ...init, ...JSON.parse(raw), step: 1 });
-    } catch {}
+    } catch { }
   }, []);
 
   useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch { }
   }, [s]);
 
   const set = <K extends keyof QuizState>(k: K, v: QuizState[K]) =>
@@ -214,26 +212,24 @@ function Quiz() {
     setErr(null);
     setLoading(true);
     try {
-      await submit({
-        data: {
-          full_name: `${s.firstName} ${s.lastName}`.trim(),
-          email: s.email.trim(),
-          phone: s.phone.trim(),
-          province: s.shipState || null,
-          cedula: null,
-          sex: s.sex!,
-          date_of_birth: s.dob || null,
-          height_cm: heightCm,
-          current_weight_kg: currentKg,
-          goal_weight_kg: goalKg,
-          pace_choice: null,
-          conditions: s.conditions,
-          medications: s.medications || null,
-          allergies: s.allergies || null,
-          blood_pressure_range: (s.bp as any) || null,
-          pregnant_or_nursing: s.pregnant,
-          prior_glp1: s.priorGlp1Weeks === "glp1",
-        },
+      await submitPatient({
+        full_name: `${s.firstName} ${s.lastName}`.trim(),
+        email: s.email.trim(),
+        phone: s.phone.trim(),
+        province: s.shipState || null,
+        cedula: null,
+        sex: s.sex!,
+        date_of_birth: s.dob || null,
+        height_cm: heightCm,
+        current_weight_kg: currentKg,
+        goal_weight_kg: goalKg,
+        pace_choice: null,
+        conditions: s.conditions,
+        medications: s.medications || null,
+        allergies: s.allergies || null,
+        blood_pressure_range: (s.bp as any) || null,
+        pregnant_or_nursing: s.pregnant,
+        prior_glp1: s.priorGlp1Weeks === "glp1",
       });
       localStorage.removeItem(STORAGE_KEY);
       setSubmitted(true);
@@ -364,8 +360,8 @@ function ProgressBar({ step, onBack }: { step: number; onBack?: () => void }) {
                 backgroundColor: done
                   ? "#2d9e6b"
                   : current
-                  ? "#5cc490"
-                  : "#e5e7eb",
+                    ? "#5cc490"
+                    : "#e5e7eb",
               }}
             />
           );
@@ -1075,7 +1071,7 @@ function Step9({
 
         <div className="mb-4">
           <label className="mb-1 block text-sm text-gray-600">
-            ¿A qué estado se enviarán sus medicamentos?
+            ¿A qué provincia se enviarán sus medicamentos?
           </label>
           <div className="relative">
             <select
@@ -1085,12 +1081,9 @@ function Step9({
               className="quiz-input w-full appearance-none pr-10"
               style={{ color: s.shipState ? "#1a1a2e" : "#9ca3af" }}
             >
-              <option value="">Seleccione un estado...</option>
-              {US_STATES.map((st) => (
-                <option key={st} value={st}>{st}</option>
-              ))}
+              <option value="">Seleccione una provincia...</option>
               {RD_PROVINCES.map((p) => (
-                <option key={p} value={p}>{p} (RD)</option>
+                <option key={p} value={p}>{p}</option>
               ))}
             </select>
             <ChevronDown className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 size-4 text-gray-400" />
@@ -1152,7 +1145,7 @@ function Step10({ s, set, firstName }: { s: QuizState; set: any; firstName: stri
           inputMode="tel"
           value={s.phone}
           onChange={(e) => set("phone", e.target.value)}
-          placeholder="+1 (555) 555-5555"
+          placeholder="+1 (809) 123-4567"
           className="quiz-input w-full"
         />
       </div>
@@ -1218,6 +1211,19 @@ function Step11({
   canSubmit: boolean;
   onSubmit: () => void;
 }) {
+  const [timeLeft, setTimeLeft] = useState(10 * 60 + 11); // 10 minutes, 11 seconds
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const mins = Math.floor(timeLeft / 60);
+  const secs = timeLeft % 60;
+  const timeStr = `${mins}:${secs < 10 ? "0" : ""}${secs}`;
+
   const plans = [
     {
       id: "1m",
@@ -1288,7 +1294,7 @@ function Step11({
         }}
       >
         <p className="text-white text-sm font-semibold">
-          Su lugar está reservado por 10:11 ⏱
+          Su lugar está reservado por {timeStr} ⏱
         </p>
       </div>
 
@@ -1306,17 +1312,10 @@ function Step11({
         </p>
         {[
           {
-            id: "semaglutide",
-            name: "Semaglutide Verano",
-            desc: "Probado, efectivo, más asequible.",
-            tag: "Más Asequible",
-            tagColor: "#2d9e6b",
-          },
-          {
             id: "tirzepatide",
-            name: "Tirzepatide Verano",
-            desc: "Más rápido, más efectivo, mejores resultados.",
-            tag: "Resultados más Rápidos",
+            name: "Tirzepatide",
+            desc: "Agonista dual GIP/GLP-1 — el tratamiento más avanzado para pérdida de peso. Resultados superiores comprobados clínicamente.",
+            tag: "Tratamiento Exclusivo DOKTAP",
             tagColor: "#7c3aed",
           },
         ].map((t) => (
@@ -1400,8 +1399,8 @@ function Step11({
               border: s.plan === plan.id
                 ? "2px solid #2d9e6b"
                 : plan.highlight
-                ? "2px solid #d1d5db"
-                : "1.5px solid #e5e7eb",
+                  ? "2px solid #d1d5db"
+                  : "1.5px solid #e5e7eb",
               borderRadius: "0.875rem",
               padding: "1rem",
               backgroundColor: s.plan === plan.id ? "#f0faf5" : "white",

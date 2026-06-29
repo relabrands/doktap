@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { auth } from "@/lib/firebase";
 import { Wordmark } from "@/components/Brand";
 
 export const Route = createFileRoute("/auth")({
@@ -23,29 +24,29 @@ function AuthPage() {
   const [info, setInfo] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (data.user) navigate({ to: "/doctor" });
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        navigate({ to: "/dashboard" });
+      }
     });
+    return () => unsub();
   }, [navigate]);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setErr(null); setInfo(null); setLoading(true);
+    setErr(null);
+    setInfo(null);
+    setLoading(true);
     try {
       if (mode === "login") {
-        const { error } = await supabase.auth.signInWithPassword({ email, password: pwd });
-        if (error) throw error;
-        navigate({ to: "/doctor" });
+        await signInWithEmailAndPassword(auth, email, pwd);
+        navigate({ to: "/dashboard" });
       } else {
-        const { error } = await supabase.auth.signUp({
-          email, password: pwd,
-          options: { emailRedirectTo: window.location.origin + "/auth" },
-        });
-        if (error) throw error;
-        setInfo("Cuenta creada. Pídele a un admin que te asigne el rol de doctor.");
+        await createUserWithEmailAndPassword(auth, email, pwd);
+        setInfo("Cuenta creada. Pídele a un admin que te asigne el rol de doctor o administrador.");
       }
     } catch (e: any) {
-      setErr(e.message || "Error");
+      setErr(e.message || "Error de autenticación");
     } finally {
       setLoading(false);
     }
@@ -63,7 +64,7 @@ function AuthPage() {
         <div className="card-soft p-6">
           <h1 className="text-2xl font-extrabold">Portal médico</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            {mode === "login" ? "Inicia sesión para revisar pacientes." : "Crea tu cuenta de doctor."}
+            {mode === "login" ? "Inicia sesión para acceder al dashboard." : "Crea tu cuenta."}
           </p>
           <form onSubmit={submit} className="mt-6 space-y-4">
             <div>
